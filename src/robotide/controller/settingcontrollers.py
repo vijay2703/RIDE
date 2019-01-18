@@ -213,6 +213,10 @@ class TagsController(_SettingController):
         tag.set_index(len(self._tags.value))
         self._tags.value.append(tag.name)
 
+    def remove(self, tag):
+        if tag in self._tags.value:
+            self._tags.value.remove(tag)
+
     def __iter__(self):
         forced = self._parent.force_tags
         if self._tags.value is None:
@@ -422,6 +426,8 @@ class VariableController(_SettingController):
     def validate_name(self, new_name):
         if variablematcher.is_scalar_variable(self.name):
             return self.parent.validate_scalar_variable_name(new_name, self)
+        if variablematcher.is_dict_variable(self.name):
+            return self.parent.validate_dict_variable_name(new_name, self)
         return self.parent.validate_list_variable_name(new_name, self)
 
     def __eq__(self, other):
