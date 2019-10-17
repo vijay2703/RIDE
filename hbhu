@@ -1,0 +1,3 @@
+mov b,#30h
+mov a,#40h
+addc a,b
